@@ -3,6 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class ParametreAyarlari extends StatefulWidget {
   const ParametreAyarlari({super.key, required this.title});
@@ -27,15 +28,18 @@ class _ParametreAyarlariState extends State<ParametreAyarlari> {
   }
 
   Future<void> _initializeDatabase() async {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'settings.db');
+    final path = join(databasePath, 'minicepborsa.db');
 
     _database = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) {
         return db.execute(
-            'CREATE TABLE settings (id INTEGER PRIMARY KEY, commission REAL, bsmw REAL)');
+            'CREATE TABLE settings (id INTEGER PRIMARY KEY, Komisyon REAL, Vergi REAL)');
       },
     );
   }
@@ -48,8 +52,8 @@ class _ParametreAyarlariState extends State<ParametreAyarlari> {
       await _database!.insert(
         'settings',
         {
-          'commission': commission,
-          'bsmw': bsmw,
+          'Komisyon': commission,
+          'Vergi': bsmw,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
       );

@@ -3,10 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'surecler/parametretanimlari.dart';
 
 void main() {
   //Brnch_ilkDemo : 17.01.2025 22:47
+
+// Masaüstü için veritabanı desteğini etkinleştirme
+  // if (DatabaseFactory is! SqfliteDatabaseFactory) {
+  //   sqfliteFfiInit();
+  //   databaseFactory = databaseFactoryFfi;
+  // }
   runApp(const MyApp());
 }
 
